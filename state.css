@@ -1,0 +1,10 @@
+button{
+  margin-left:10px;
+}
+.hiddend{
+  display:none;
+  width:20px;
+  height:10px;
+  border-radius: 30px;
+  border: 2px solid black;
+}
