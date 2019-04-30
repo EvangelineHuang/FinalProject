@@ -1,10 +1,157 @@
+@import url('https://fonts.googleapis.com/css?family=Schoolbell|Wendy+One');
 button{
   margin-left:10px;
 }
-.hiddend{
+.hidden{
   display:none;
   width:20px;
   height:10px;
   border-radius: 30px;
   border: 2px solid black;
+}
+path:hover{
+  stroke-width:2px;
+}
+.line,.xAxis,.yAxis{
+  pointer-events:none;
+}
+
+.year{
+    color: #A0A0D7;
+    background-image: linear-gradient(to right top, #326ab8, #3177c0, #3483c7, #3b90ce, #459cd4);
+    display: inline-block;
+    text-decoration: none;
+    width: 60px;
+    height: 60px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.28);
+    transition: .3s;
+    font-size:10px;
+    padding-left:3px;
+    font-family: 'Wendy One', sans-serif;
+    font-family: 'Schoolbell', cursive;
+}
+
+.year:hover{
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.28);
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    transform: translateY(-5px);
+}
+.style{
+ position:absolute;
+ top:20px;
+ left:1000px;
+ width:70px;
+ height: 300px;
+ overflow-y: auto;
+ border-top: 3px solid #5E6AC2;
+ background-color: #FFEFCA;
+ padding-right:5px;
+}
+.style2{
+ position:absolute;
+ top:20px;
+ left:1000px;
+ width:160px;
+ height: 300px;
+ overflow-y: auto;
+ border-top: 3px solid #5E6AC2;
+ background-color: #FFEFCA;
+}
+.style2::-webkit-scrollbar { width: 0 !important }
+.style::-webkit-scrollbar { width: 0 !important }
+.style button{
+  margin-left:10px;
+}
+.directory{
+  position:absolute;
+  top:20px;
+  left:20px;
+}
+.di{
+  font-family: 'Wendy One', sans-serif;
+  font-family: 'Schoolbell', cursive;
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #668ad8;
+  color: #FFF;
+  border-radius: 4px;
+  box-shadow: 0px 0px 0px 5px #668ad8;
+  border: dashed 1px #FFF;
+  margin-left:20px;.square_btn {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-left: solid 4px #668ad8;
+  border-right: solid 4px #668ad8;
+  color: #668ad8;
+  text-shadow: 0 0 5px white;
+  padding: 0.5em 1em;
+  background: -webkit-repeating-linear-gradient(-45deg, #cce7ff, #cce7ff 3px,#e9f4ff 3px, #e9f4ff 7px);
+  background: repeating-linear-gradient(-45deg, #cce7ff, #cce7ff 3px,#e9f4ff 3px, #e9f4ff 7px);
+  transition: .4s;
+}
+
+.di:hover {
+    background: -webkit-repeating-linear-gradient(-45deg, #cce7ff, #cce7ff 5px,#e9f4ff 5px, #e9f4ff 9px);
+    background: repeating-linear-gradient(-45deg, #cce7ff, #cce7ff 5px,#e9f4ff 5px, #e9f4ff 9px);
+}
+}
+.di:hover{
+	border: dotted 1px #FFF;
+}
+
+#map{
+  position:absolute;
+  top:150px;
+}
+.job {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border-left: solid 4px #668ad8;
+    border-right: solid 4px #668ad8;
+    color: #668ad8;
+    text-shadow: 0 0 5px white;
+    padding: 0.5em 1em;
+    background: repeating-linear-gradient(-45deg, #cce7ff, #cce7ff 3px,#e9f4ff 3px, #e9f4ff 7px);
+    transition: .4s;
+    margin-bottom:15px;
+    font-family: 'Wendy One', sans-serif;
+    font-family: 'Schoolbell', cursive;
+}
+.job:hover {
+    background: repeating-linear-gradient(-45deg, #cce7ff, #cce7ff 5px,#e9f4ff 5px, #e9f4ff 9px);
+}
+.homepage{
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    color: #00BCD4;
+    background: #ECECEC;
+    transition: .4s;
+    width:200px;
+    height:50px;
+    font-size:25px;
+    font-family: 'Wendy One', sans-serif;
+    font-family: 'Schoolbell', cursive;
+  }
+
+.homepage:hover {
+    background: #00bcd4;
+    color: white;
 }
