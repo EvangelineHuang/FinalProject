@@ -4,7 +4,7 @@ var total=d3.csv("FinalData/TotalEmployment.csv");
 var salary=d3.csv("FinalData/Salary.csv");
 var geo=d3.json("FinalData/us-states.json");
 var usAverage=d3.csv("FinalData/average.csv")
-var button=["employment","percent","salary","wage","average"]
+var button=["employment","percent","salary","wage","average","correlation"]
 var nation=d3.csv("FinalData/NationalWage.csv")
 var year=[1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018]
 var year2=[2009,2010,2011,2012,2013,2014,2015,2016,2017,2018]
@@ -33,6 +33,70 @@ var drawMap=function(geoD){
         .attr("stroke","black")
         .attr("fill","#efe5d4")
 
+}
+////////////////////////////////////////////////////////////
+var correlation=function(s,geo){
+  var margins={left:30,right:10,top:20,bottom:20}
+  var width=500;
+  var height=500;
+  var p=geo.features.map(function(d){
+    return d.properties.name
+  })
+  var ind=p.indexOf(s)
+  var wg=geo.features.map(function(d){
+    return d.properties.wage;
+  })
+  var ep=geo.features.map(function(d){
+    return d.properties.employment;
+  })
+  var pair=[]
+  for(var m=0;m<year.length;m++){
+    pair.push({x:wg[ind][year[m]],y:ep[ind][year[m]]})}
+
+ console.log(pair)
+  var xScale2=d3.scaleLinear()
+                .domain([d3.min(pair,function(d){return d.x}),d3.max(pair,function(d){return d.x})])
+                .range([margins.left+10,width+margins.left])
+  var yScale2=d3.scaleSymlog()
+               .domain([d3.min(pair,function(d){return d.y}),d3.max(pair,function(d){return d.y})])
+               .range([height,margins.top])
+   var svg2=d3.select("#body")
+              .append("svg")
+              .attr("width",width+margins.right+margins.left)
+              .attr("height",height+margins.top+margins.bottom)
+    svg2.selectAll("circle")
+        .data(pair)
+        .enter()
+        .append("circle")
+        .attr("cx",function(d){return xScale2(d.x)})
+        .attr("cy",function(d){return yScale2(d.y)})
+        .attr("r","5")
+        .attr("id",function(d,i){
+          return "y"+year[i]
+        })
+    var xAxis2=d3.axisBottom(xScale2);
+    var yAxis2=d3.axisLeft(yScale2);
+    svg2.append("g")
+       .classed("xAxis3",true)
+       .call(xAxis2)
+       .attr("transform","translate(0,"+height+")");
+    svg2.append("g")
+       .classed("yAxis3",true)
+       .call(yAxis2)
+       .attr("transform","translate("+(margins.left+margins.right)+",0)");
+       var mx=d3.mean(pair, function(d){return d.x;})
+       var my=d3.mean(pair,function(d){return d.y;})
+       var top=pair.map(function(d,i)
+       {
+         return (pair[i].x-mx)*(pair[i].y-my);
+       })
+       var topSum=d3.sum(top);
+       var sx=d3.deviation(pair,function(d){return d.x});
+       var sy=d3.deviation(pair,function(d){return d.y});
+       var r=(1/(pair.length-1))*(topSum/(sx*sy))
+    d3.select("#body")
+      .append("p")
+      .text("r="+r.toFixed(2))
 }
 ///////////////////////////////////////////////////////////////////
 var drawemploymentcolor=function(data,year){
@@ -133,7 +197,6 @@ y.forEach(function(d){
   if(d>0)
   {positive.push(parseInt(d,10))}
 })
-console.log(positive)
 var color=d3.scaleQuantile()
             .domain(positive)
             .range(["#11c2ba","#10097d","#0047ab", "#0073be", "#009cbe"])
@@ -916,10 +979,49 @@ Promise.all([wage,thousand,total,salary,geo,usAverage,nation]).then(function(dat
           })
           .text(function(d){return d})
       }
+      if(choice=="correlation"){
+        var st=geo.features.map(function(d){
+          return d.properties.name;
+        })
+        d3.selectAll("path")
+          .attr("class","correlation");
+        d3.selectAll(".style").remove()
+        d3.selectAll(".style2").remove()
+        d3.selectAll("path").attr("fill","#efe5d4")
+        d3.select("#body")
+          .append("div")
+          .classed("style",true)
+          .selectAll("button.new6")
+          .data(st)
+          .enter()
+          .append("button")
+          .classed("year",true)
+          .attr("id",function(d){return d})
+          .on("click",function(d){
+            d3.select("#body").remove();
+            d3.select("body")
+              .append("div")
+              .attr("id","body");
+            correlation(d,geo)
+            d3.select("#body")
+              .append("button")
+              .attr("class","homepage")
+              .on("click",function(d)
+            {
+              d3.select("#body").remove();
+              d3.select("body")
+                .append("div")
+                .attr("id","body");
+                 draw()
+            })
+              .text("Home Page");
+          })
+          .text(function(d){return d})}
     })
     .text(function(d){
       return d;
     })
+/////////////////////////////////////
     drawMap(geo)
     d3.selectAll("path")
       .on("click",function(){
