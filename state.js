@@ -123,15 +123,17 @@ var drawaveragecolor=function(data,job,average){
 var y=data.features.map(function(d){
   return d.properties.salary[job]-average[0][job];
 })
-var negative=y.map(function(d){
+var negative=[]
+y.forEach(function(d){
   if(d<0)
-  {return d}
+  {negative.push(parseInt(d,10))}
 })
-var positive=y.map(function(d){
+var positive=[]
+y.forEach(function(d){
   if(d>0)
-  {return d}
+  {positive.push(parseInt(d,10))}
 })
-
+console.log(positive)
 var color=d3.scaleQuantile()
             .domain(positive)
             .range(["#11c2ba","#10097d","#0047ab", "#0073be", "#009cbe"])
