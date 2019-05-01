@@ -97,7 +97,7 @@ path:hover{
   position:absolute;
   top:3%;
   left:5%;
-  width:70%;
+  width:85%;
 }
 .di{
     padding:7px;
@@ -110,7 +110,7 @@ path:hover{
     color: #67c5ff;
     transition: .4s;
     margin-left:15px;
-    width: 13%;
+    width: 10%;
     height: 50%;
     font-size:20px;
 }
