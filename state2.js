@@ -57,7 +57,7 @@ var drawMap=function(geoD,lat,xs){
             })
             .text(d.properties.name)
             .style("pointer-events","none")
-            .attr("stroke","#DA9BB7");
+            .attr("stroke","#002F57");
         })
         .on("mouseout",function(){
           d3.select("#info").remove()
@@ -71,7 +71,7 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
             if(d.properties.hjob.job!="")
             {return color(d.properties.hjob.job)}
             else{
-              return "grey"
+              return "#BABDC2"
             }
           })
 
@@ -111,25 +111,40 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
  var cmedian=d3.median(sa)
  svg.append("circle")
     .attr("id","cmax")
-    .attr("cx",900)
-    .attr("cy",600)
+    .attr("cx",980)
+    .attr("cy",100)
     .attr('r',scale(cmax))
-    .attr("fill","none")
+    .attr("fill","#005850")
     .attr("stroke","black")
     svg.append("circle")
        .attr("id","cmin")
-       .attr("cx",900)
-       .attr("cy",600)
+       .attr("cx",980)
+       .attr("cy",160)
        .attr('r',scale(cmin))
-       .attr("fill","none")
+       .attr("fill","#005850")
        .attr("stroke","black")
        svg.append("circle")
           .attr("id","cmedian")
-          .attr("cx",900)
-          .attr("cy",600)
+          .attr("cx",980)
+          .attr("cy",137)
           .attr('r',scale(cmedian))
-          .attr("fill","none")
+          .attr("fill","#005850")
           .attr("stroke","black")
+          svg.append("text")
+             .attr("id","tmax")
+             .attr("x",1010)
+             .attr("y",105)
+             .text(cmax)
+             svg.append("text")
+                .attr("id","tmin")
+                .attr("x",1010)
+                .attr("y",165)
+                .text(cmin)
+                svg.append("text")
+                   .attr("id","tmedian")
+                   .attr("x",1010)
+                   .attr("y",142)
+                   .text(cmedian)
 //////////////////////////////////////////////
       svg.selectAll("rect.legend")
          .data(ocp)
@@ -145,6 +160,14 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
          .attr("fill",function(d){
            return color(d)
          })
+      svg.append("rect")
+         .attr("class","legend")
+         .attr("x",880)
+         .attr("y",300)
+         .attr("width",20)
+         .attr("height",10)
+         .attr("fill","#BABDC2")
+
          svg.selectAll("text.legendt")
             .data(ocp)
             .enter()
@@ -155,7 +178,11 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
               return 340+30*i;
             })
             .text(function(d){return d})
-
+            svg.append("text")
+               .attr("class","legendt")
+               .attr("x",910)
+               .attr("y",310)
+               .text("No Data")
     d3.select("circle#Florida")
       .attr("cx","780")
     d3.select("circle#Delaware")
@@ -507,6 +534,7 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
              .on("click",function(){
                stat="diff"
                drawDifference(geo,2001)
+               clearInterval(id)
              })
              .text("Difference")
 
@@ -516,6 +544,7 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
            .on("click",function(){
              stat="state"
              state(geo,2001)
+             clearInterval(id)
            })
            .text("State")
          d3.select("body")
@@ -523,9 +552,11 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
            .attr("id","start")
            .on("click",function(){
              if (stat=="diff"){
+               clearInterval(id)
                start();
              }
              else if (stat=="state"){
+               clearInterval(id)
                start2();
              }
            })
@@ -541,6 +572,7 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
                 .attr("fill","none")
               d3.select("#year")
                 .text("")
+              clearInterval(id)
              })
              .text("Clear")
 var id;
@@ -591,16 +623,5 @@ d3.select("body")
     clearInterval(id)
   })
   .text("Stop")
-  d3.select("body")
-    .append("button")
-    .attr("id","restart")
-    .on("click",function(){
-      if (stat=="diff"){
-        start();
-      }
-      else if (stat=="state"){
-        start2();
-      }
-    })
-    .text("Restart")
+
        },function(err){console.log(err)})
