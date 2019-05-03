@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+#start{
+  position:absolute;
+  top:10%;
+}
+#clear{
+  position:absolute;
+  top:19%;
+}
+#state{
+  position:absolute;
+  top:28%;}
+#diff{
+  position:absolute;
+  top:37%;}
+#stop{
+  position:absolute;
+  top:46%;
+}
+#restart{
+  position:absolute;
+  top:55%;
+}
+.filled {
+    fill: url(#mainGradient);
+}
+body{
+  background-image: linear-gradient(to right top, #a1c4fc, #a4cefd, #aad8fc, #b5e1fc, #c2e9fb);
+  font-family: 'Indie Flower', cursive;
+}
+button{
+    position:absolute;
+    right:5%;
+    display: inline-block;
+    width:10%;
+    height:7%;
+    font-weight: bold;
+    text-decoration: none;
+    border-left: solid 4px #668ad8;
+    border-right: solid 4px #668ad8;
+    color: #668ad8;
+    text-shadow: 0 0 5px white;
+    background: repeating-linear-gradient(-45deg, #cce7ff, #cce7ff 3px,#e9f4ff 3px, #e9f4ff 7px);
+    transition: .4s;
+    margin-bottom:15px;
+    font-family: 'Wendy One', sans-serif;
+    font-family: 'Schoolbell', cursive;
+    font-size:20px;
+
+}
+button:hover {
+    background: repeating-linear-gradient(-45deg, #cce7ff, #cce7ff 5px,#e9f4ff 5px, #e9f4ff 9px);
+}
+p{
+  position:absolute;
+  top:10%;
+  right:40%;
+  font-size:30px;
+}
+#map path:hover{
+  stroke-width:3;
+}
