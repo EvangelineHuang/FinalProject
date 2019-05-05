@@ -9,6 +9,8 @@ var lat=d3.csv("FinalData/us-states-lat.csv")
 var screen={width:1150,height:1000};
 //////////////////////////////////////////////////////
 var drawMap=function(geoD,lat,xs){
+  d3.select("div")
+    .text("Difference Between National Annual Average Wage and State Annual Average Wage")
   var sa=[]
   for(var n=0;n<xs.length;n++){
     if(xs[n]!=0){
@@ -35,7 +37,6 @@ var drawMap=function(geoD,lat,xs){
           return d.properties.name.split(" ").join("");
         })
         .attr("d",geoGenerator)
-        .attr("stroke","black")
         .attr("fill","#efe5d4")
         .on("mouseover",function(d){
           var s=d3.select(this).attr("id")
@@ -134,17 +135,17 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
              .attr("id","tmax")
              .attr("x",1010)
              .attr("y",105)
-             .text(cmax)
+             .text("$"+cmax)
              svg.append("text")
                 .attr("id","tmin")
                 .attr("x",1010)
                 .attr("y",165)
-                .text(cmin)
+                .text("$"+cmin)
                 svg.append("text")
                    .attr("id","tmedian")
                    .attr("x",1010)
                    .attr("y",142)
-                   .text(cmedian)
+                   .text("$"+cmedian)
 //////////////////////////////////////////////
       svg.selectAll("rect.legend")
          .data(ocp)
@@ -280,17 +281,17 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
       var median=d3.median(yp)
 　 svg.append("text")
      .attr("id","max")
-     .text(max)
+     .text("$"+max)
      .attr("x",900)
      .attr("y",610)
   svg.append("text")
      .attr("id","min")
-     .text(min)
+     .text("$"+"$"+min)
      .attr("x",600)
      .attr("y",610)
      svg.append("text")
         .attr("id","median")
-        .text(median)
+        .text("$"+median)
         .attr("x",750)
         .attr("y",610)
       var svgDefs = svg.append('defs');
@@ -419,6 +420,8 @@ var drawDifference=function(geo,yr){
 }
 ///////////////////////////////////////////////////////////
 function state(geo,year){
+  d3.select("p")
+    .text(year)
   var twage=geo.features.map(function(d){
     return d.properties.wage;
   })
@@ -532,9 +535,16 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
              .append("button")
              .attr("id","diff")
              .on("click",function(){
+               d3.select("div")
+                 .text("Difference Between National Annual Average Wage and State Annual Average Wage")
                stat="diff"
-               drawDifference(geo,2001)
+               d3.selectAll(".point")
+                 .attr("fill","none")
+                d3.selectAll("path")
+                  .attr("fill","#efe5d4")
                clearInterval(id)
+               d3.select("p")
+                 .text("")
              })
              .text("Difference")
 
@@ -542,9 +552,16 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
            .append("button")
            .attr("id","state")
            .on("click",function(){
+             d3.select("div")
+               .text("Annual Average Wage of Each State")
              stat="state"
-             state(geo,2001)
+             d3.selectAll(".point")
+               .attr("fill","none")
              clearInterval(id)
+             d3.select("p")
+               .text("")
+             d3.selectAll("path")
+               .attr("fill","#efe5d4")
            })
            .text("State")
          d3.select("body")

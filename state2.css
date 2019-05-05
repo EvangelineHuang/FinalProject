@@ -61,3 +61,7 @@ p{
 #map path:hover{
   stroke-width:3;
 }
+div{
+  font-size:30px;
+  font-weight: 600;
+}
