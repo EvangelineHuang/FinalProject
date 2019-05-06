@@ -133,17 +133,17 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
           .attr("stroke","black")
           svg.append("text")
              .attr("id","tmax")
-             .attr("x",1010)
+             .attr("x",1000)
              .attr("y",105)
              .text("$"+cmax)
              svg.append("text")
                 .attr("id","tmin")
-                .attr("x",1010)
+                .attr("x",1000)
                 .attr("y",165)
                 .text("$"+cmin)
                 svg.append("text")
                    .attr("id","tmedian")
-                   .attr("x",1010)
+                   .attr("x",1000)
                    .attr("y",142)
                    .text("$"+cmedian)
 //////////////////////////////////////////////
@@ -371,6 +371,7 @@ function drawpoint(y){
     .data(y)
     .enter()
     .append("text")
+    .attr("class","p")
     .text(function(d){
       return d;
     })
@@ -514,7 +515,6 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
          lat.forEach(function(d){
            d.hjob=jobdict2[d.STATE];
          })
-         console.log(geo)
          drawMap(geo,lat,w)
          drawpoint(year)
          var stat="diff"

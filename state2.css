@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+@import url('https://fonts.googleapis.com/css?family=Courgette');
 #start{
   position:absolute;
   top:10%;
@@ -17,21 +17,17 @@
   position:absolute;
   top:46%;
 }
-#restart{
-  position:absolute;
-  top:55%;
-}
 .filled {
     fill: url(#mainGradient);
 }
 body{
   background-image: linear-gradient(to right top, #a1c4fc, #a4cefd, #aad8fc, #b5e1fc, #c2e9fb);
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Courgette', cursive;
   font-size:20px;
 }
 button{
     position:absolute;
-    right:5%;
+    right:4%;
     display: inline-block;
     width:10%;
     height:7%;
@@ -64,4 +60,7 @@ p{
 div{
   font-size:30px;
   font-weight: 600;
+}
+.p{
+  font-size: 80%;
 }
