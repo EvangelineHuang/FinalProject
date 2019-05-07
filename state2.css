@@ -21,7 +21,7 @@
     fill: url(#mainGradient);
 }
 body{
-  background-image: linear-gradient(to right top, #a1c4fc, #a4cefd, #aad8fc, #b5e1fc, #c2e9fb);
+  background-color:#B1A296;
   font-family: 'Courgette', cursive;
   font-size:20px;
 }
