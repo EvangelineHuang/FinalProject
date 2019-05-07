@@ -265,7 +265,6 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
           {all.push(parseInt(y[ele][pro],10))}
         }
       }
-
       var yp=[]
       var yn=[]
       all.forEach(function(d){
@@ -294,8 +293,6 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
         .text("$"+median)
         .attr("x",750)
         .attr("y",610)
-    svg.append("text")
-       .attr("id","mean")
       var svgDefs = svg.append('defs');
       var mainGradient = svgDefs.append('linearGradient')
           .attr('id', 'mainGradient');
@@ -364,8 +361,7 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
              .attr("stroke","white")
              .attr("stroke-width",2)
              .style("opacity",0.75)
-             svg.append("line")
-                .attr("id","lmean")
+
 }
 ///////////////////////////////////////////////////////////
 function drawpoint(y){
@@ -455,6 +451,13 @@ function state(geo,year,dict){
       {all.push(parseInt(twage[ele][pro],10))}
     }
   }
+  var all2=[]
+  for(var ele in twage)
+  {
+    all2.push(parseInt(twage[ele][year],10))
+
+  }
+  console.log(all2)
   var max=d3.max(all)
   var min=d3.min(all)
   var median=d3.median(all)
@@ -470,19 +473,7 @@ function state(geo,year,dict){
           .text("$"+median)
           .attr("x",750)
           .attr("y",610)
-  var prop=dict[year]/max;
-  d3.select("#mean")
-    .attr("x",600+prop*300)
-    .attr("y",660)
-    .text("$"+dict[year])
-  d3.select("#lmean")
-    .attr("x1",620+prop*300)
-    .attr("x2",620+prop*300)
-    .attr("y1",620)
-    .attr("y2",635)
-    .attr("stroke","black")
-  console.log(prop)
-  var colorScale=d3.scaleOrdinal()
+      var colorScale=d3.scaleOrdinal()
                    .domain(all)
                    .range(["#ffffd9", "#edf7cf", "#d9f0c7", "#c5e8c0", "#b0e0bc", "#8cd2b6", "#65c3b4", "#35b4b5", "#0099b7", "#007db6","#005dab", "#213a91"])
   d3.selectAll("path")
@@ -597,7 +588,7 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
              d3.selectAll("path")
                .attr("fill","#efe5d4")
            })
-           .text("State")
+           .text("State Wage")
          d3.select("body")
            .append("button")
            .attr("id","start")
