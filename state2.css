@@ -54,8 +54,13 @@ p{
   right:40%;
   font-size:30px;
 }
+#map path{
+  z-index:0;
+}
 #map path:hover{
+  z-index:555555 !important;
   stroke-width:3;
+
 }
 div{
   font-size:30px;

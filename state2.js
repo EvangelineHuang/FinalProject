@@ -106,6 +106,7 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
               return "grey"
             }
           })
+          .style("pointer-events","none")
       console.log(xs)
  var cmax=d3.max(sa)
  var cmin=d3.min(sa)
