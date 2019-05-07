@@ -5,17 +5,18 @@
 }
 #clear{
   position:absolute;
-  top:19%;
+  top:28%;
 }
 #state{
   position:absolute;
-  top:28%;}
+  top:46%;
+}
 #diff{
   position:absolute;
   top:37%;}
 #stop{
   position:absolute;
-  top:46%;
+  top:19%;
 }
 .filled {
     fill: url(#mainGradient);
