@@ -361,7 +361,6 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
              .attr("stroke","white")
              .attr("stroke-width",2)
              .style("opacity",0.75)
-
 }
 ///////////////////////////////////////////////////////////
 function drawpoint(y){
@@ -408,6 +407,43 @@ function pointColor(y){
 }
 ///////////////////////////////////////////////////////////
 var drawDifference=function(geo,yr){
+  var y=geo.features.map(function(d){
+    return d.properties.perwage;
+  })
+  var all=[]
+  for(var ele in y)
+  {
+    for(var pro in y[ele]){
+      if(pro!="STATE"&&pro!="ABBR")
+      {all.push(parseInt(y[ele][pro],10))}
+    }
+  }
+  var yp=[]
+  var yn=[]
+  all.forEach(function(d){
+    if(d>0){
+      yp.push(d)
+    }
+    else if(d<0){
+      yn.push(Math.abs(d))
+    }
+  })
+  var max=d3.max(yp)
+  var min=d3.min(yp)
+  var median=d3.median(yp)
+  var svg=d3.select("svg")
+  svg.select("#max")
+       .text("$"+max)
+       .attr("x",900)
+       .attr("y",610)
+    svg.select("#min")
+       .text("$"+min)
+       .attr("x",600)
+       .attr("y",610)
+       svg.select("#median")
+          .text("$"+median)
+          .attr("x",750)
+          .attr("y",610)
   d3.select("p")
     .text(yr)
   var y=geo.features.map(function(d){
