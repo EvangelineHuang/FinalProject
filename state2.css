@@ -20,6 +20,9 @@
 .filled {
     fill: url(#mainGradient);
 }
+.fill {
+    fill: url(#mainGradient2);
+}
 body{
   background-color:#B1A296;
   font-family: 'Courgette', cursive;

@@ -6,7 +6,7 @@ var job=d3.csv("FinalData/Salary.csv")
 var ocp=["Software Engineer","Java Developer","Web Developer","System Engineer","Application Developer","Software Test Engineer","Front End Developer","Systems Analyst","C++ Developer"]
 var geo=d3.json("FinalData/us-states.json");
 var lat=d3.csv("FinalData/us-states-lat.csv")
-var screen={width:1150,height:1000};
+var screen={width:1150,height:800};
 //////////////////////////////////////////////////////
 var drawMap=function(geoD,lat,xs){
   d3.select("div")
@@ -20,7 +20,7 @@ var drawMap=function(geoD,lat,xs){
   var scale=d3.scaleLinear()
               .domain([d3.min(sa),d3.max(sa)])
               .range([5,20])
-  var projection=d3.geoAlbersUsa().scale([1300]).translate([screen.width/2-100,screen.height/2-200]);;
+  var projection=d3.geoAlbersUsa().scale([1300]).translate([screen.width/2-100,screen.height/2-100]);;
   var geoGenerator=d3.geoPath().projection(projection)
   var svg=d3.select("body")
             .append("svg")
@@ -107,7 +107,6 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
             }
           })
           .style("pointer-events","none")
-      console.log(xs)
  var cmax=d3.max(sa)
  var cmin=d3.min(sa)
  var cmedian=d3.median(sa)
@@ -287,7 +286,7 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
      .attr("y",610)
   svg.append("text")
      .attr("id","min")
-     .text("$"+"$"+min)
+     .text("$"+min)
      .attr("x",600)
      .attr("y",610)
      svg.append("text")
@@ -295,6 +294,8 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
         .text("$"+median)
         .attr("x",750)
         .attr("y",610)
+    svg.append("text")
+       .attr("id","mean")
       var svgDefs = svg.append('defs');
       var mainGradient = svgDefs.append('linearGradient')
           .attr('id', 'mainGradient');
@@ -328,7 +329,6 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
       mainGradient.append('stop')
           .attr('offset', '100%')
           .attr("stop-color", "#213a91");
-
       svg.append('g')
           .attr('id',"legend")
           .append('rect')
@@ -338,6 +338,24 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
           .attr('width', 300)
           .attr('height', 15)
           .attr('transform',"translate(600,600)");
+          var svgDefs2 = svg.append('defs');
+          var mainGradient2 = svgDefs2.append('linearGradient')
+              .attr('id', 'mainGradient2');
+              mainGradient2.append('stop')
+                  .attr('offset', '0%')
+                  .attr("stop-color", "#D98324");
+              mainGradient2.append('stop')
+                  .attr('offset', '100%')
+                  .attr("stop-color", "#A40606");
+                  svg.append('g')
+                      .attr('id',"legend2")
+                      .append('rect')
+                      .classed('fill', true)
+                      .attr('x', 20)
+                      .attr('y', 20)
+                      .attr('width', 300)
+                      .attr('height', 15)
+                      .attr('transform',"translate(600,650)");
           svg.append("line")
              .attr("x1",770)
              .attr("x2",770)
@@ -346,7 +364,8 @@ var color=d3.scaleOrdinal(["#dc97a9", "#f2cb7c", "#edaf88", "#91b539", "#B55A52"
              .attr("stroke","white")
              .attr("stroke-width",2)
              .style("opacity",0.75)
-
+             svg.append("line")
+                .attr("id","lmean")
 }
 ///////////////////////////////////////////////////////////
 function drawpoint(y){
@@ -359,7 +378,7 @@ function drawpoint(y){
     .attr("id",function(d){
       return "y"+d;
     })
-    .attr("cy",700)
+    .attr("cy",720)
     .attr("cx",function(d,i){
       return 20+i*50
     })
@@ -379,7 +398,7 @@ function drawpoint(y){
     .attr("x",function(d,i){
       return 20+i*50
     })
-    .attr("y",705)
+    .attr("y",725)
     .style("text-anchor","middle")
     .style("pointer-events","none")
 
@@ -413,6 +432,7 @@ var drawDifference=function(geo,yr){
                 .range(["#ffffd9", "#edf7cf", "#d9f0c7", "#b0e0bc", "#8cd2b6", "#65c3b4", "#35b4b5", "#0099b7","#005dab", "#213a91"])
   var color2=d3.scaleQuantile()
                .domain(yn)
+               .range(["#D98324","#A40606"])
   d3.selectAll("path")
     .transition()
     .attr("fill",function(d){
@@ -421,7 +441,7 @@ var drawDifference=function(geo,yr){
 
 }
 ///////////////////////////////////////////////////////////
-function state(geo,year){
+function state(geo,year,dict){
   d3.select("p")
     .text(year)
   var twage=geo.features.map(function(d){
@@ -439,17 +459,29 @@ function state(geo,year){
   var min=d3.min(all)
   var median=d3.median(all)
   d3.select("#max")
-       .text(max)
+       .text("$"+max)
        .attr("x",900)
        .attr("y",610)
     d3.select("#min")
-       .text(min)
+       .text("$"+min)
        .attr("x",600)
        .attr("y",610)
        d3.select("#median")
-          .text(median)
+          .text("$"+median)
           .attr("x",750)
           .attr("y",610)
+  var prop=dict[year]/max;
+  d3.select("#mean")
+    .attr("x",600+prop*300)
+    .attr("y",660)
+    .text("$"+dict[year])
+  d3.select("#lmean")
+    .attr("x1",620+prop*300)
+    .attr("x2",620+prop*300)
+    .attr("y1",620)
+    .attr("y2",635)
+    .attr("stroke","black")
+  console.log(prop)
   var colorScale=d3.scaleOrdinal()
                    .domain(all)
                    .range(["#ffffd9", "#edf7cf", "#d9f0c7", "#c5e8c0", "#b0e0bc", "#8cd2b6", "#65c3b4", "#35b4b5", "#0099b7", "#007db6","#005dab", "#213a91"])
@@ -486,6 +518,7 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
          allAnnual.forEach(function(d){
            dictAnnual[d.year]=parseInt(d.a_mean,10);
          })
+         console.log(dictAnnual)
          var jobdict={}
          job.forEach(function(d){
            jobdict[d.STATE]=d;
@@ -529,7 +562,7 @@ Promise.all([annualWage,comAnnual,allAnnual,geo,job,lat,annualWage2])
              if (stat=="state")
              {var yy=d3.select(this).attr("id").split("y")
              pointColor(yy[1])
-             state(geo,yy[1])
+             state(geo,yy[1],dictAnnual)
              clearInterval(id)}
            })
            d3.select("body")
@@ -617,7 +650,7 @@ function start()
 function start2()
 {
     pointColor(year[0])
-    state(geo,year[0])
+    state(geo,year[0],dictAnnual)
     var i=1
     id = setInterval(frame,1000)
     function frame()
@@ -629,7 +662,7 @@ function start2()
       else
     {
         pointColor(year[i])
-        state(geo,year[i])
+        state(geo,year[i],dictAnnual)
         i++;
     }
     }
